@@ -31,12 +31,15 @@ class Settings(BaseSettings):
         )
 
     # Redis
-    REDIS_HOST: str
+    REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
+    REDIS_URL: str | None = None
     
     @computed_field
     @property
-    def REDIS_URL(self) -> str:
+    def ASYNC_REDIS_URL(self) -> str:
+        if self.REDIS_URL:
+            return self.REDIS_URL
         return str(
             RedisDsn.build(
                 scheme="redis",
