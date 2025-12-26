@@ -44,6 +44,10 @@ app.add_exception_handler(Exception, generic_exception_handler)
 # API Router
 app.include_router(urls.router, prefix=settings.API_V1_STR, tags=["urls"])
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
 # Root Redirect Endpoint
 @app.get("/{short_code}", response_class=RedirectResponse, status_code=301)
 @limiter.limit("10/minute")
@@ -71,6 +75,4 @@ async def redirect_to_url(
     
     return RedirectResponse(url=url, status_code=301)
 
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+
