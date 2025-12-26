@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+
+    --radius: 0.75rem;
+
+    /* Cyberpunk Neons */
+    --neon-pink: 320 100% 55%;
+    --neon-cyan: 190 100% 50%;
+    --neon-violet: 270 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 50% 0%, rgba(120, 50, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 0% 50%, rgba(50, 200, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 100% 50%, rgba(255, 50, 150, 0.1) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Custom Utilities */
+.glass-panel {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500;
+}
+
+.text-gradient-cyan {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600;
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(140, 50, 255, 0.3);
+}
+
+.input-cyber {
+  @apply bg-black/50 border-white/10 focus:border-purple-500/50 focus:ring-purple-500/20 transition-all duration-300;
+}
