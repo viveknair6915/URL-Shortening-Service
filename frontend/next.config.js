@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://backend:8000/api/v1/:path*' // Proxy to backend in docker
-      }
-    ]
-  }
+  // output: 'standalone', // Validation: Removed for Vercel
+  // rewrites: async () => [] // Validation: Removed for direct API calls
 }
 
 module.exports = nextConfig
