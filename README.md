@@ -9,6 +9,25 @@ A production-ready, full-stack URL shortener featuring a **Cyberpunk/Glassmorphi
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="screenshots/1_home.png" alt="Home Page - Cyberpunk Aesthetic" width="800"/>
+  <p><em>Modern, dark-themed Home Page with animated glassmorphism effects.</em></p>
+</div>
+
+<br/>
+
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <img src="screenshots/2_action.png" alt="Processing" width="45%"/>
+    <img src="screenshots/3_result.png" alt="Result Page with QR Code" width="45%"/>
+  </div>
+  <p><em>Instant link generation and QR code support (Result Page).</em></p>
+</div>
+
+---
+
 ## ✨ Key Features
 
 ### 🎨 User Experience (Frontend)
