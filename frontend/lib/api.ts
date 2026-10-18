@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+const getApiBaseUrl = () => {
+    let url = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+    url = url.trim().replace(/\/+$/, '');
+    if (!url.endsWith('/api/v1')) {
+        url = `${url}/api/v1`;
+    }
+    return url;
+};
+
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1'
+    baseURL: getApiBaseUrl()
 });
 
 export const shortenUrl = async (url: string) => {

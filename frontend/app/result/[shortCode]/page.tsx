@@ -17,7 +17,12 @@ export default function ResultPage() {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            setShortUrl(`${window.location.protocol}//${window.location.hostname}:8000/${shortCode}`);
+            const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+            if (isLocal) {
+                setShortUrl(`http://localhost:8000/${shortCode}`);
+            } else {
+                setShortUrl(`${window.location.origin}/${shortCode}`);
+            }
         }
     }, [shortCode]);
 
