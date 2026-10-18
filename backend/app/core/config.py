@@ -21,11 +21,22 @@ class Settings(BaseSettings):
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         if self.DATABASE_URL:
+            import urllib.parse as up
             uri = self.DATABASE_URL
             if uri.startswith("postgres://"):
                 uri = uri.replace("postgres://", "postgresql+asyncpg://", 1)
             elif uri.startswith("postgresql://") and not uri.startswith("postgresql+asyncpg://"):
                 uri = uri.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+            parsed = up.urlparse(uri)
+            if parsed.query:
+                q = up.parse_qs(parsed.query)
+                q.pop("channel_binding", None)
+                ssl_mode = q.pop("sslmode", None)
+                if ssl_mode:
+                    q["ssl"] = ssl_mode
+                new_query = up.urlencode(q, doseq=True)
+                uri = up.urlunparse(parsed._replace(query=new_query))
             return uri
         return str(
             PostgresDsn.build(
