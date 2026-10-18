@@ -1,40 +1,47 @@
-from typing import List
+from typing import List, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import PostgresDsn, RedisDsn, AnyHttpUrl, computed_field
+from pydantic import PostgresDsn, RedisDsn, computed_field
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "URL Shortener"
     API_V1_STR: str = "/api/v1"
     
     # CORS
-    # CORS
     BACKEND_CORS_ORIGINS: List[str] = []
 
     # Database
-    POSTGRES_SERVER: str
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
+    DATABASE_URL: Optional[str] = None
+    POSTGRES_SERVER: Optional[str] = None
+    POSTGRES_USER: Optional[str] = None
+    POSTGRES_PASSWORD: Optional[str] = None
+    POSTGRES_DB: Optional[str] = None
     POSTGRES_PORT: int = 5432
 
     @computed_field
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
+        if self.DATABASE_URL:
+            uri = self.DATABASE_URL
+            if uri.startswith("postgres://"):
+                uri = uri.replace("postgres://", "postgresql+asyncpg://", 1)
+            elif uri.startswith("postgresql://") and not uri.startswith("postgresql+asyncpg://"):
+                uri = uri.replace("postgresql://", "postgresql+asyncpg://", 1)
+            return uri
         return str(
             PostgresDsn.build(
                 scheme="postgresql+asyncpg",
-                username=self.POSTGRES_USER,
-                password=self.POSTGRES_PASSWORD,
-                host=self.POSTGRES_SERVER,
+                username=self.POSTGRES_USER or "postgres",
+                password=self.POSTGRES_PASSWORD or "postgres",
+                host=self.POSTGRES_SERVER or "localhost",
                 port=self.POSTGRES_PORT,
-                path=self.POSTGRES_DB,
+                path=self.POSTGRES_DB or "urlshortener",
             )
         )
 
     # Redis
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
-    REDIS_URL: str | None = None
+    REDIS_URL: Optional[str] = None
     
     @computed_field
     @property

@@ -1,10 +1,11 @@
+from typing import Optional
 import redis.asyncio as redis
 from app.core.config import settings
 
 class RedisClient:
     def __init__(self):
-        self.redis_url = settings.REDIS_URL
-        self._redis: redis.Redis | None = None
+        self.redis_url = settings.ASYNC_REDIS_URL
+        self._redis: Optional[redis.Redis] = None
 
     async def get_redis(self) -> redis.Redis:
         if not self._redis:
